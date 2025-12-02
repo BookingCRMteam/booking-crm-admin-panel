@@ -1,7 +1,7 @@
 "use client";
 
 import { useLogin } from "@refinedev/core";
-import Image from 'next/image'
+import Image from "next/image";
 import { Box, Button, Container, Typography } from "@mui/material";
 import { ThemedTitle } from "@refinedev/mui";
 

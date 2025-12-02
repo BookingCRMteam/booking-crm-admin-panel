@@ -1,6 +1,6 @@
 import Auth0Provider from "next-auth/providers/auth0";
-import { JWT } from 'next-auth/jwt';
-import { Session, AuthOptions } from 'next-auth';
+import { JWT } from "next-auth/jwt";
+import { Session, AuthOptions } from "next-auth";
 
 const authOptions: AuthOptions = {
   providers: [
@@ -17,33 +17,33 @@ const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-        async jwt({ token, account, user }) {
-            if (account && user) {
-                return {
-                    ...token,
-                    accessToken: account.access_token,
-                    refreshToken: account.refresh_token,
-                    accessTokenExpires: account.expires_at ?? 0 * 1000, 
-                };
-            }
+    async jwt({ token, account, user }) {
+      if (account && user) {
+        return {
+          ...token,
+          accessToken: account.access_token,
+          refreshToken: account.refresh_token,
+          accessTokenExpires: account.expires_at ?? 0 * 1000,
+        };
+      }
 
-            if (Date.now() < (token.accessTokenExpires as number)) {
-                return token;
-            }
-            
-            return token;
-        },
+      if (Date.now() < (token.accessTokenExpires as number)) {
+        return token;
+      }
 
-        async session({ session, token }: { session: Session, token: JWT }) {
-            (session as any).accessToken = token.accessToken;
-            
-            return session;
-        },
+      return token;
     },
 
-    session: {
-        strategy: 'jwt',
+    async session({ session, token }: { session: Session; token: JWT }) {
+      (session as any).accessToken = token.accessToken;
+
+      return session;
     },
+  },
+
+  session: {
+    strategy: "jwt",
+  },
   secret: process.env.AUTH0_SECRET!,
 };
 

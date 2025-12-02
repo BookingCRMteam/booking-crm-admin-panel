@@ -20,7 +20,7 @@ type RefineContextProps = {
 };
 
 export const RefineContext = (
-  props: React.PropsWithChildren<RefineContextProps>
+  props: React.PropsWithChildren<RefineContextProps>,
 ) => {
   return (
     <SessionProvider>
@@ -117,7 +117,7 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
                 {
                   name: "operators",
                   list: "/operators",
-                }
+                },
               ]}
               options={{
                 syncWithLocation: true,
