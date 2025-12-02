@@ -1,4 +1,6 @@
 [build]
+command = "npm run build"
+publish = ".next"
 
-[build.secrets_scanning]
-omit_keys = ["NEXT_PUBLIC_API_BASE_URL"]
+[build.environment]
+SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_API_BASE_URL"
