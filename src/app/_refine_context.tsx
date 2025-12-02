@@ -37,6 +37,7 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
   const { data, status } = useSession();
   const to = usePathname();
 
+// TODO: change loading to spinner
   if (status === "loading") {
     return <span>loading...</span>;
   }
@@ -54,10 +55,9 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
     },
     logout: async () => {
       signOut({
-        redirect: true,
-        callbackUrl: "/login",
+        redirect: false,
       });
-
+      window.location.href = "/api/auth/logout";
       return {
         success: true,
       };
