@@ -44,7 +44,7 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
 
   const authProvider: AuthProvider = {
     login: async () => {
-      signIn("auth0", {
+      await signIn("auth0", {
         callbackUrl: to ? to.toString() : "/",
         redirect: true,
       });

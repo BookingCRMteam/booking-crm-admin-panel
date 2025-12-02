@@ -3,7 +3,7 @@ import axios, { AxiosInstance } from "axios";
 import { DataProvider } from "@refinedev/core";
 import { getSession } from "next-auth/react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 const axiosInstance: AxiosInstance = axios.create();
 
