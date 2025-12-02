@@ -37,7 +37,7 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
   const { data, status } = useSession();
   const to = usePathname();
 
-// TODO: change loading to spinner
+  // TODO: change loading to spinner
   if (status === "loading") {
     return <span>loading...</span>;
   }
