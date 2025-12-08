@@ -9,7 +9,7 @@
     "dev": "cross-env NODE_OPTIONS=--max_old_space_size=4096 refine dev",
     "build": "refine build",
     "start": "refine start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "refine": "refine",
     "format": "prettier --write .",
     "prepare": "husky"
@@ -36,13 +36,15 @@
     "react-dom": "^19.2.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
+    "@eslint/js": "^9.39.1",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
     "cross-env": "^7.0.3",
-    "eslint": "^8",
-    "eslint-config-next": "^15.0.3",
+    "eslint": "^9.39.1",
+    "eslint-config-next": "^15.5.7",
     "husky": "^9.1.7",
     "prettier": "3.7.3",
     "typescript": "^5.8.3"
