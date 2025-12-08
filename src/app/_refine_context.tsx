@@ -117,6 +117,16 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
                 {
                   name: "operators",
                   list: "/operators",
+                  show: "/operators/show/:id",
+                  edit: "/operators/edit/:id",
+                  meta: {
+                    resourceName: 'admin/operators'
+                  }
+                },
+                {
+                  name: "tours",
+                  list: "/tours",
+                  show: "/tours/show/:id",
                 },
               ]}
               options={{
