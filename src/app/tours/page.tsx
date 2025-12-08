@@ -24,7 +24,7 @@ export default function ToursList() {
         headerName: "Назва",
         minWidth: 200,
       },
-       {
+      {
         field: "price",
         flex: 1,
         headerName: "Ціна",
@@ -57,9 +57,7 @@ export default function ToursList() {
         sortable: false,
         display: "flex",
         renderCell: function render({ row }) {
-          return (
-              <ShowButton hideText recordItemId={row.id} />
-          );
+          return <ShowButton hideText recordItemId={row.id} />;
         },
       },
     ],

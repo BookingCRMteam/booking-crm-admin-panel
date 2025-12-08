@@ -27,7 +27,7 @@ export const dataProvider: DataProvider = {
     if (pagination) {
       const currentPage = pagination.currentPage || 1;
       const pageSize = pagination.pageSize || 2;
-      
+
       params.set("limit", pageSize.toString());
       params.set("offset", ((currentPage - 1) * pageSize).toString());
     }
@@ -41,13 +41,22 @@ export const dataProvider: DataProvider = {
     }
     if (sorters && sorters.length > 0) {
       params.append("sortBy", sorters.map((sorter) => sorter.field).join(","));
-      params.append("sortOrder", sorters.map((sorter) => sorter.order).join(","));
+      params.append(
+        "sortOrder",
+        sorters.map((sorter) => sorter.order).join(","),
+      );
     }
-    const response = await axiosInstance.get(`${API_URL}/${meta?.resourceName || resource}`, {
-      params,
-    });
+    const response = await axiosInstance.get(
+      `${API_URL}/${meta?.resourceName || resource}`,
+      {
+        params,
+      },
+    );
     if (response.status < 200 || response.status > 299) throw response;
-    const data = meta?.resourceName === 'admin/operators' ? response.data.items : response.data.data;
+    const data =
+      meta?.resourceName === "admin/operators"
+        ? response.data.items
+        : response.data.data;
 
     return {
       data,
@@ -55,12 +64,18 @@ export const dataProvider: DataProvider = {
     };
   },
   getOne: async ({ resource, id, meta }) => {
-    const response = await axiosInstance.get(`${API_URL}/${meta?.resourceName || resource}/${id}`);
+    const response = await axiosInstance.get(
+      `${API_URL}/${meta?.resourceName || resource}/${id}`,
+    );
     if (response.status < 200 || response.status > 299) throw response;
-    return meta?.resourceName === 'admin/operators' ? response : response.data;
+    return meta?.resourceName === "admin/operators" ? response : response.data;
   },
   update: async ({ resource, id, variables, meta }) => {
-    const response = await axiosInstance.patch(`${API_URL}/${meta?.resourceName || resource}/${id}`,  variables);
+    const response = await axiosInstance.patch(
+      `${API_URL}/${meta?.resourceName || resource}/${id}`,
+      variables,
+    );
     if (response.status < 200 || response.status > 299) throw response;
-    return meta?.resourceName === 'admin/operators' ? response : response.data;
-  }}
+    return meta?.resourceName === "admin/operators" ? response : response.data;
+  },
+};

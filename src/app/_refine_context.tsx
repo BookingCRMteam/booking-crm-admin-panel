@@ -120,8 +120,8 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
                   show: "/operators/show/:id",
                   edit: "/operators/edit/:id",
                   meta: {
-                    resourceName: 'admin/operators'
-                  }
+                    resourceName: "admin/operators",
+                  },
                 },
                 {
                   name: "tours",

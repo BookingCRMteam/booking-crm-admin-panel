@@ -1,31 +1,22 @@
 "use client";
 
-import {
-  DataGrid,
-  type GridColDef,
-} from "@mui/x-data-grid";
+import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import { List, ShowButton, EditButton, useDataGrid } from "@refinedev/mui";
 import React, { useState, useMemo } from "react";
-import {
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Box,
-} from "@mui/material";
+import { Select, MenuItem, FormControl, InputLabel, Box } from "@mui/material";
 
 export default function OperatorsList() {
-  const [selectedStatus, setSelectedStatus] = useState<string>(""); 
+  const [selectedStatus, setSelectedStatus] = useState<string>("");
 
   const { dataGridProps, setFilters } = useDataGrid({
     resource: "operators",
-    pagination: { mode: "server", pageSize: 2 }, 
+    pagination: { mode: "server", pageSize: 2 },
     filters: { mode: "server" },
   });
 
   const columns = useMemo<GridColDef[]>(
     () => [
-        {
+      {
         field: "id",
         flex: 1,
         headerName: "ID",
@@ -78,7 +69,7 @@ export default function OperatorsList() {
 
   const handleSelectFilter = (event: { target: { value: string } }) => {
     const statusValue = event.target.value;
-    setSelectedStatus(statusValue); 
+    setSelectedStatus(statusValue);
 
     if (statusValue) {
       setFilters(
@@ -96,7 +87,7 @@ export default function OperatorsList() {
         [
           {
             field: "status",
-            value: undefined, 
+            value: undefined,
             operator: "eq",
           },
         ],
@@ -116,7 +107,7 @@ export default function OperatorsList() {
             label="Фільтр по статусу"
             onChange={handleSelectFilter}
           >
-            <MenuItem value="">Всі (All)</MenuItem> 
+            <MenuItem value="">Всі (All)</MenuItem>
             <MenuItem value="approved">Approved</MenuItem>
             <MenuItem value="pending">Pending</MenuItem>
             <MenuItem value="rejected">Rejected</MenuItem>
