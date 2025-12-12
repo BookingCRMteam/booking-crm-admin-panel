@@ -7,6 +7,7 @@ import {
   TableRow,
   TableCell,
   Divider,
+  Link,
 } from "@mui/material";
 import Image from "next/image";
 import type { IOperator } from "@interfaces/operators";
@@ -80,8 +81,8 @@ export const OperatorInfo: FC<OperatorInfoProps> = ({
 
         <Table size="small" sx={{ mb: 3 }}>
           <TableBody>
-            {contacts.map((item, index) => (
-              <TableRow key={index}>
+            {contacts.map((item) => (
+              <TableRow key={item.href}>
                 <TableCell
                   component="th"
                   scope="row"
@@ -90,14 +91,13 @@ export const OperatorInfo: FC<OperatorInfoProps> = ({
                   {item.label}
                 </TableCell>
                 <TableCell>
-                  <a
+                  <Link
                     href={item.href}
-                    style={{ color: "white", textDecoration: "underline" }}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     {item.value}
-                  </a>
+                  </Link>
                 </TableCell>
               </TableRow>
             ))}

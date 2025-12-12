@@ -1,17 +1,22 @@
 export type IOperator = {
   id: number;
-  email: string;
+  userId: number;
+
   createdAt: string;
   updatedAt: string;
-  userId: number;
-  companyName: string;
-  description: string;
+
   firstName: string;
   lastName: string;
+
+  email: string;
   website: string;
   phone: string;
+
   status: "approved" | "rejected" | "pending";
-  philosophy: string;
-  photo: string;
-  rejectionReason: string;
+  rejectionReason: string | null;
+
+  companyName?: string;
+  description?: string;
+  philosophy?: string;
+  photo?: string;
 };

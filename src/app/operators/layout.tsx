@@ -6,18 +6,11 @@ import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 
 export default async function Layout({ children }: PropsWithChildren) {
-  const data = await getData();
+  const session = await getServerSession(authOptions);
 
-  if (!data.session?.user) {
+  if (!session?.user) {
     return redirect("/login");
   }
 
   return <ThemedLayout Header={Header}>{children}</ThemedLayout>;
-}
-
-async function getData() {
-  const session = await getServerSession(authOptions);
-  return {
-    session,
-  };
 }

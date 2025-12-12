@@ -12,6 +12,7 @@ export default function OperatorsList() {
     resource: "operators",
     pagination: { mode: "server", pageSize: 8 },
     filters: { mode: "server" },
+    sorters: { mode: "off" },
   });
 
   const columns = useMemo<GridColDef[]>(
@@ -53,7 +54,6 @@ export default function OperatorsList() {
         headerAlign: "right",
         minWidth: 120,
         sortable: false,
-        display: "flex",
         renderCell: function render({ row }) {
           return (
             <>

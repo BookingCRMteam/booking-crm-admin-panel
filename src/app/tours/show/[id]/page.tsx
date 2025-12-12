@@ -114,7 +114,6 @@ function TourDetails() {
   }
 
   const details = getTourDetails(tour);
-  const linkStyle = { textDecoration: "underline", color: "inherit" };
   return (
     <Card sx={{ mt: 2 }}>
       <CardContent>
@@ -124,8 +123,8 @@ function TourDetails() {
 
         <Table size="small">
           <TableBody>
-            {details.map((item, index) => (
-              <TableRow key={index}>
+            {details.map((item) => (
+              <TableRow key={item.label}>
                 <TableCell
                   component="th"
                   scope="row"
@@ -146,11 +145,7 @@ function TourDetails() {
                 Оператор
               </TableCell>
               <TableCell>
-                <Link
-                  href={`/operators/${tour.operator.id}`}
-                  passHref
-                  style={linkStyle}
-                >
+                <Link href={`/operators/${tour.operator.id}`} passHref>
                   {tour.operator.firstName} {tour.operator.lastName}
                 </Link>
               </TableCell>
@@ -167,9 +162,9 @@ function TourDetails() {
               </TableCell>
               <TableCell>
                 {tour.operator.email ? (
-                  <a href={`mailto:${tour.operator.email}`} style={linkStyle}>
+                  <Link href={`mailto:${tour.operator.email}`}>
                     {tour.operator.email}
-                  </a>
+                  </Link>
                 ) : (
                   "-"
                 )}
@@ -187,9 +182,9 @@ function TourDetails() {
               </TableCell>
               <TableCell>
                 {tour.operator.phone ? (
-                  <a href={`tel:${tour.operator.phone}`} style={linkStyle}>
+                  <Link href={`tel:${tour.operator.phone}`}>
                     {tour.operator.phone}
-                  </a>
+                  </Link>
                 ) : (
                   "-"
                 )}

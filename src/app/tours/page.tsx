@@ -55,7 +55,6 @@ export default function ToursList() {
         headerAlign: "right",
         minWidth: 120,
         sortable: false,
-        display: "flex",
         renderCell: function render({ row }) {
           return <ShowButton hideText recordItemId={row.id} />;
         },
