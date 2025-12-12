@@ -75,7 +75,7 @@ function OperatorEditDetails() {
       status: currentStatus,
     };
     if (currentStatus === "rejected") {
-      dataToSend.rejectionReason = rejectionReason;
+      dataToSend.rejectionReason = rejectionReason.trim();
     }
 
     if (id) {
@@ -142,10 +142,12 @@ function OperatorEditDetails() {
           onChange={(e) => setRejectionReason(e.target.value)}
           disabled={!isRejectionReasonRequired}
           required={isRejectionReasonRequired}
-          error={isRejectionReasonRequired && rejectionReason.length < 50}
+          error={
+            isRejectionReasonRequired && rejectionReason.trim().length < 50
+          }
           helperText={
-            isRejectionReasonRequired && rejectionReason.length < 50
-              ? `Залишилось: ${50 - rejectionReason.length} символів`
+            isRejectionReasonRequired && rejectionReason.trim().length < 50
+              ? `Залишилось: ${50 - rejectionReason.trim().length} символів`
               : null
           }
         />

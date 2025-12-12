@@ -6,7 +6,7 @@ import React from "react";
 
 export default function ToursList() {
   const { dataGridProps } = useDataGrid({
-    pagination: { mode: "server" },
+    pagination: { mode: "server", pageSize: 8 },
     sorters: { mode: "server" },
   });
 
@@ -41,12 +41,16 @@ export default function ToursList() {
         flex: 1,
         headerName: "Початкова дата",
         minWidth: 100,
+        valueFormatter: (value) =>
+          value ? new Date(value).toLocaleDateString() : "-",
       },
       {
         field: "endDate",
         flex: 1,
         headerName: "Кінцева дата",
         minWidth: 100,
+        valueFormatter: (value) =>
+          value ? new Date(value).toLocaleDateString() : "-",
       },
       {
         field: "actions",
@@ -68,7 +72,7 @@ export default function ToursList() {
       <DataGrid
         {...dataGridProps}
         columns={columns}
-        pageSizeOptions={[2, 4, 8, 16, 25]}
+        pageSizeOptions={[8, 16, 24]}
       />
     </List>
   );

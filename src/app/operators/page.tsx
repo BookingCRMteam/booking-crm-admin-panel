@@ -109,7 +109,7 @@ export default function OperatorsList() {
       <DataGrid
         {...dataGridProps}
         columns={columns}
-        pageSizeOptions={[2, 4, 8, 16, 25]}
+        pageSizeOptions={[8, 16, 24]}
       />
     </List>
   );

@@ -42,12 +42,23 @@ export const getOperatorContacts = (operator: IOperator) => {
   const websiteHref = sanitizeHref(operator.website);
 
   return [
-    { label: "Телефон", href: `tel:${operator.phone}`, value: operator.phone },
-    { label: "Email", href: `mailto:${operator.email}`, value: operator.email },
+    {
+      label: "Телефон",
+      href: operator.phone ? `tel:${operator.phone}` : undefined,
+      value: operator.phone || undefined,
+      id: 1,
+    },
+    {
+      label: "Email",
+      href: operator.email ? `mailto:${operator.email}` : undefined,
+      value: operator.email || undefined,
+      id: 2,
+    },
     {
       label: "Вебсайт",
       href: websiteHref || undefined,
       value: operator.website,
+      id: 3,
     },
   ];
 };

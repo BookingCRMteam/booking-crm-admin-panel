@@ -76,8 +76,8 @@ type ITour = {
 const getTourDetails = (tour: ITour) => [
   { label: "ID", value: tour.id ?? "-" },
   { label: "Назва Туру", value: tour.title ?? "-" },
-  { label: "Країна", value: tour.country.translations[0].name ?? "-" },
-  { label: "Місто", value: tour.city.translations[0].name ?? "-" },
+  { label: "Країна", value: tour.country?.translations[0].name ?? "-" },
+  { label: "Місто", value: tour.city?.translations[0].name ?? "-" },
   { label: "Тип", value: tour.type ?? "-" },
   { label: "Ціна", value: `${tour.price} ${tour.currency}` },
   {
@@ -145,7 +145,7 @@ function TourDetails() {
                 Оператор
               </TableCell>
               <TableCell>
-                <Link href={`/operators/${tour.operator.id}`} passHref>
+                <Link href={`/operators/show/${tour.operator.id}`} passHref>
                   {tour.operator.firstName} {tour.operator.lastName}
                 </Link>
               </TableCell>

@@ -82,7 +82,7 @@ export const OperatorInfo: FC<OperatorInfoProps> = ({
         <Table size="small" sx={{ mb: 3 }}>
           <TableBody>
             {contacts.map((item) => (
-              <TableRow key={item.href}>
+              <TableRow key={item.id}>
                 <TableCell
                   component="th"
                   scope="row"
