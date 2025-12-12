@@ -37,13 +37,14 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
   const { data, status } = useSession();
   const to = usePathname();
 
+  // TODO: change loading to spinner
   if (status === "loading") {
     return <span>loading...</span>;
   }
 
   const authProvider: AuthProvider = {
     login: async () => {
-      signIn("auth0", {
+      await signIn("auth0", {
         callbackUrl: to ? to.toString() : "/",
         redirect: true,
       });
@@ -54,10 +55,9 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
     },
     logout: async () => {
       signOut({
-        redirect: true,
-        callbackUrl: "/login",
+        redirect: false,
       });
-
+      window.location.href = "/api/auth/logout";
       return {
         success: true,
       };
@@ -117,6 +117,16 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
                 {
                   name: "operators",
                   list: "/operators",
+                  show: "/operators/show/:id",
+                  edit: "/operators/edit/:id",
+                  meta: {
+                    resourceName: "admin/operators",
+                  },
+                },
+                {
+                  name: "tours",
+                  list: "/tours",
+                  show: "/tours/show/:id",
                 },
               ]}
               options={{

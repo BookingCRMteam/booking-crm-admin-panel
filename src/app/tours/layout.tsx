@@ -1,9 +1,9 @@
-import type { PropsWithChildren } from "react";
 import { ThemedLayout } from "@refinedev/mui";
 import { Header } from "@components/header";
 import authOptions from "@app/api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
+import type { PropsWithChildren } from "react";
 
 export default async function Layout({ children }: PropsWithChildren) {
   const session = await getServerSession(authOptions);
