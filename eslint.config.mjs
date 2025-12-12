@@ -13,7 +13,14 @@ const compat = new FlatCompat({
 });
 
 export default defineConfig([
+  ...compat.extends("next/core-web-vitals"),
   {
-    extends: compat.extends("next/core-web-vitals"),
+    ignores: [
+      'node_modules/',
+      'dist/',
+      'build/',
+      '.next/',
+      '*.d.ts',
+    ],
   },
 ]);

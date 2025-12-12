@@ -26,7 +26,7 @@ export const dataProvider: DataProvider = {
     const params = new URLSearchParams();
     if (pagination) {
       const currentPage = pagination.currentPage || 1;
-      const pageSize = pagination.pageSize || 2;
+      const pageSize = pagination.pageSize || 8;
 
       params.set("limit", pageSize.toString());
       params.set("offset", ((currentPage - 1) * pageSize).toString());
@@ -68,7 +68,12 @@ export const dataProvider: DataProvider = {
       `${API_URL}/${meta?.resourceName || resource}/${id}`,
     );
     if (response.status < 200 || response.status > 299) throw response;
-    return meta?.resourceName === "admin/operators" ? response : response.data;
+    const record =
+      meta?.resourceName === "admin/operators"
+        ? response.data
+        : (response.data.data ?? response.data);
+
+    return { data: record };
   },
   update: async ({ resource, id, variables, meta }) => {
     const response = await axiosInstance.patch(
@@ -76,6 +81,11 @@ export const dataProvider: DataProvider = {
       variables,
     );
     if (response.status < 200 || response.status > 299) throw response;
-    return meta?.resourceName === "admin/operators" ? response : response.data;
+    const record =
+      meta?.resourceName === "admin/operators"
+        ? response.data
+        : (response.data.data ?? response.data);
+
+    return { data: record };
   },
 };

@@ -2,7 +2,7 @@
 
 import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import { List, ShowButton, EditButton, useDataGrid } from "@refinedev/mui";
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { Select, MenuItem, FormControl, InputLabel, Box } from "@mui/material";
 
 export default function OperatorsList() {
@@ -10,7 +10,7 @@ export default function OperatorsList() {
 
   const { dataGridProps, setFilters } = useDataGrid({
     resource: "operators",
-    pagination: { mode: "server", pageSize: 2 },
+    pagination: { mode: "server", pageSize: 8 },
     filters: { mode: "server" },
   });
 
@@ -83,16 +83,7 @@ export default function OperatorsList() {
         "replace",
       );
     } else {
-      setFilters(
-        [
-          {
-            field: "status",
-            value: undefined,
-            operator: "eq",
-          },
-        ],
-        "replace",
-      );
+      setFilters([], "replace");
     }
   };
 

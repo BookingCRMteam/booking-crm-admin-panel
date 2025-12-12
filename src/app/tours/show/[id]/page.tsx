@@ -114,7 +114,7 @@ function TourDetails() {
   }
 
   const details = getTourDetails(tour);
-  const linkStyle = { textDecoration: "underline", color: "white" };
+  const linkStyle = { textDecoration: "underline", color: "inherit" };
   return (
     <Card sx={{ mt: 2 }}>
       <CardContent>
