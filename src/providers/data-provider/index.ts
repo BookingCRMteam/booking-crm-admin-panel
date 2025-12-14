@@ -79,22 +79,10 @@ export const dataProvider: DataProvider = {
 
     return { data: record };
   },
-  update: async ({ resource, id, variables, meta }) => {
-    let response;
-    if (meta?.resourceName === "admin/tours") {
-      response = await axiosInstance.patch(`${API_URL}/${resource}`, variables);
-    } else {
-      response = await axiosInstance.patch(
-        `${API_URL}/${meta?.resourceName || resource}/${id}`,
-        variables,
-      );
-    }
-    if (response.status < 200 || response.status > 299) throw response;
-    const record =
-      meta?.resourceName === "admin/operators"
-        ? response.data
-        : (response.data.data ?? response.data);
+  update: async ({ resource, variables }) => {
+    const response = await axiosInstance.patch(`${API_URL}/${resource}`, variables);
 
-    return { data: record };
+    if (response.status < 200 || response.status > 299) throw response;
+    return { data: response.data };
   },
 };

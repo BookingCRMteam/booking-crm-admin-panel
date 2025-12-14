@@ -81,7 +81,7 @@ function OperatorEditDetails() {
     if (id) {
       changeOperatorStatus({
         id: id,
-        resource: "operators",
+        resource: `admin/operators/${id}`,
         values: dataToSend,
         successNotification: {
           message: "Статус оператора успішно оновлено",
