@@ -2,19 +2,20 @@
 
 import { Typography } from "@mui/material";
 import { useShow } from "@refinedev/core";
-import { Show } from "@refinedev/mui";
+import { Edit } from "@refinedev/mui";
 import type { ITour } from "@interfaces/tours";
 import { TourDetails } from "@components/tours/TourDetails";
+import { FeaturedTourToggle } from "@components/tours/FeaturedTourToggle";
 
-export default function TourShow() {
+export default function TourEdit() {
   return (
-    <Show>
-      <TourDetailsShow />
-    </Show>
+    <Edit saveButtonProps={{ style: { display: "none" } }}>
+      <TourEditDetails />
+    </Edit>
   );
 }
 
-function TourDetailsShow() {
+function TourEditDetails() {
   const {
     result: tour,
     query: { isLoading },
@@ -29,6 +30,11 @@ function TourDetailsShow() {
   }
 
   return (
-    <TourDetails tour={tour}>{tour.isFeatured ? "Так" : "Ні"}</TourDetails>
+    <TourDetails tour={tour}>
+      <FeaturedTourToggle
+        tourId={tour.id}
+        initialIsFeatured={tour.isFeatured}
+      />
+    </TourDetails>
   );
 }
