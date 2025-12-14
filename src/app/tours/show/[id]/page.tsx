@@ -9,88 +9,14 @@ import {
   TableRow,
   TableCell,
   Box,
+  Link as MuiLink,
 } from "@mui/material";
 import { useShow } from "@refinedev/core";
 import { Show } from "@refinedev/mui";
 import Image from "next/image";
 import Link from "next/link";
-
-type ITour = {
-  id: number;
-  operatorId: number;
-  title: string;
-  description: string;
-  countryISO2Code: string;
-  cityId: number;
-  type: string;
-  price: string;
-  currency: string;
-  startDate: string;
-  endDate: string;
-  availableSpots: number;
-  conditions: string;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-  photos: {
-    id: number;
-    tourId: number;
-    url: string;
-    isMain: boolean;
-    description: string;
-  }[];
-  operator: {
-    id: number;
-    email: string;
-    createdAt: string;
-    updatedAt: string;
-    userId: number;
-    companyName: string;
-    description: string;
-    firstName: string;
-    lastName: string;
-    website: string;
-    phone: string;
-    status: string;
-    philosophy: string;
-    photo: string;
-    rejectionReason: string;
-  };
-  country: {
-    id: number;
-    iso2: string;
-    iso3: string;
-    translations: [
-      { id: number; countryIso2: string; languageCode: string; name: string },
-    ];
-  };
-  city: {
-    id: number;
-    countryIso2: string;
-    translations: [
-      { id: number; cityId: number; languageCode: string; name: string },
-    ];
-  };
-};
-
-const getTourDetails = (tour: ITour) => [
-  { label: "ID", value: tour.id ?? "-" },
-  { label: "Назва Туру", value: tour.title ?? "-" },
-  { label: "Країна", value: tour.country?.translations[0].name ?? "-" },
-  { label: "Місто", value: tour.city?.translations[0].name ?? "-" },
-  { label: "Тип", value: tour.type ?? "-" },
-  { label: "Ціна", value: `${tour.price} ${tour.currency}` },
-  {
-    label: "Дата початку",
-    value: new Date(tour.startDate).toLocaleDateString(),
-  },
-  {
-    label: "Дата закінчення",
-    value: new Date(tour.endDate).toLocaleDateString(),
-  },
-  { label: "Доступні місця", value: tour.availableSpots ?? "-" },
-  { label: "Активний", value: tour.isActive ? "Так" : "Ні" },
-];
+import type { ITour } from "@interfaces/tours";
+import { getTourDetails } from "@shared/utils/tours";
 
 export default function TourShow() {
   return (
@@ -105,6 +31,7 @@ function TourDetails() {
     result: tour,
     query: { isLoading },
   } = useShow<ITour>();
+
   if (isLoading) {
     return <Typography>Завантаження...</Typography>;
   }
@@ -135,7 +62,16 @@ function TourDetails() {
                 <TableCell>{item.value}</TableCell>
               </TableRow>
             ))}
-
+            <TableRow>
+              <TableCell
+                component="th"
+                scope="row"
+                sx={{ fontWeight: "bold", width: "30%" }}
+              >
+                Вибраний тур
+              </TableCell>
+              <TableCell>{tour.isFeatured ? "Так" : "Ні"}</TableCell>
+            </TableRow>
             <TableRow>
               <TableCell
                 component="th"
@@ -145,13 +81,15 @@ function TourDetails() {
                 Оператор
               </TableCell>
               <TableCell>
-                <Link href={`/operators/show/${tour.operator.id}`} passHref>
+                <MuiLink
+                  component={Link}
+                  href={`/operators/show/${tour.operator.id}`}
+                >
                   {tour.operator.firstName} {tour.operator.lastName}
-                </Link>
+                </MuiLink>
               </TableCell>
             </TableRow>
 
-            {/* 3. ЛІНК: Email оператора (mailto) */}
             <TableRow>
               <TableCell
                 component="th"
@@ -162,16 +100,15 @@ function TourDetails() {
               </TableCell>
               <TableCell>
                 {tour.operator.email ? (
-                  <Link href={`mailto:${tour.operator.email}`}>
+                  <MuiLink href={`mailto:${tour.operator.email}`}>
                     {tour.operator.email}
-                  </Link>
+                  </MuiLink>
                 ) : (
                   "-"
                 )}
               </TableCell>
             </TableRow>
 
-            {/* 4. ЛІНК: Телефон оператора (tel) */}
             <TableRow>
               <TableCell
                 component="th"
@@ -182,16 +119,15 @@ function TourDetails() {
               </TableCell>
               <TableCell>
                 {tour.operator.phone ? (
-                  <Link href={`tel:${tour.operator.phone}`}>
+                  <MuiLink href={`tel:${tour.operator.phone}`}>
                     {tour.operator.phone}
-                  </Link>
+                  </MuiLink>
                 ) : (
                   "-"
                 )}
               </TableCell>
             </TableRow>
 
-            {/* 5. ПОЛЕ: Опис */}
             <TableRow>
               <TableCell colSpan={2}>
                 <Typography variant="subtitle1" fontWeight="bold" mt={2}>
@@ -203,7 +139,6 @@ function TourDetails() {
               </TableCell>
             </TableRow>
 
-            {/* 6. ПОЛЕ: Умови Туру */}
             <TableRow>
               <TableCell colSpan={2}>
                 <Typography variant="subtitle1" fontWeight="bold" mt={2}>
@@ -215,7 +150,6 @@ function TourDetails() {
               </TableCell>
             </TableRow>
 
-            {/* 7. ФОТО: Фотографії */}
             <TableRow>
               <TableCell
                 component="th"

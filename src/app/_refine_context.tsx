@@ -127,6 +127,7 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
                   name: "tours",
                   list: "/tours",
                   show: "/tours/show/:id",
+                  edit: "/tours/edit/:id",
                 },
               ]}
               options={{

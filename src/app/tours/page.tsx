@@ -1,35 +1,30 @@
 "use client";
 
 import { DataGrid, type GridColDef } from "@mui/x-data-grid";
-import { List, useDataGrid, ShowButton } from "@refinedev/mui";
-import React from "react";
+import { List, useDataGrid, ShowButton, EditButton } from "@refinedev/mui";
+import { useMemo } from "react";
+import { Checkbox } from "@mui/material";
+import { ToursListFilters } from "@components/tours/ToursListFilters";
 
 export default function ToursList() {
-  const { dataGridProps } = useDataGrid({
+  const { dataGridProps, setFilters } = useDataGrid({
     pagination: { mode: "server", pageSize: 8 },
     sorters: { mode: "server" },
   });
-
-  const columns = React.useMemo<GridColDef[]>(
+  const columns = useMemo<GridColDef[]>(
     () => [
+      { field: "id", flex: 1, headerName: "ID", minWidth: 50 },
+      { field: "title", flex: 1, headerName: "Назва", minWidth: 200 },
       {
-        field: "id",
+        field: "isFeatured",
         flex: 1,
-        headerName: "ID",
-        minWidth: 50,
+        headerName: "Featured",
+        minWidth: 150,
+        renderCell: function render({ row }) {
+          return <Checkbox checked={row.isFeatured} disabled />;
+        },
       },
-      {
-        field: "title",
-        flex: 1,
-        headerName: "Назва",
-        minWidth: 200,
-      },
-      {
-        field: "price",
-        flex: 1,
-        headerName: "Ціна",
-        minWidth: 100,
-      },
+      { field: "price", flex: 1, headerName: "Ціна", minWidth: 100 },
       {
         field: "availableSpots",
         flex: 1,
@@ -60,7 +55,12 @@ export default function ToursList() {
         minWidth: 120,
         sortable: false,
         renderCell: function render({ row }) {
-          return <ShowButton hideText recordItemId={row.id} />;
+          return (
+            <>
+              <ShowButton hideText recordItemId={row.id} />
+              <EditButton hideText recordItemId={row.id} />
+            </>
+          );
         },
       },
     ],
@@ -69,6 +69,7 @@ export default function ToursList() {
 
   return (
     <List>
+      <ToursListFilters setFilters={setFilters} />
       <DataGrid
         {...dataGridProps}
         columns={columns}
