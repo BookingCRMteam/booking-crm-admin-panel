@@ -1,3 +1,5 @@
+import type { IOperator } from "./operators";
+
 export type ITour = {
   id: number;
   operatorId: number;
@@ -23,23 +25,7 @@ export type ITour = {
     isMain: boolean;
     description: string;
   }[];
-  operator: {
-    id: number;
-    email: string;
-    createdAt: string;
-    updatedAt: string;
-    userId: number;
-    companyName: string;
-    description: string;
-    firstName: string;
-    lastName: string;
-    website: string;
-    phone: string;
-    status: string;
-    philosophy: string;
-    photo: string;
-    rejectionReason: string;
-  };
+  operator: IOperator;
   country: {
     id: number;
     iso2: string;

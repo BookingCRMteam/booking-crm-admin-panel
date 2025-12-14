@@ -52,7 +52,7 @@ export const TourDetails: FC<TourDetailsProps> = ({ tour, children }) => {
                 scope="row"
                 sx={{ fontWeight: "bold", width: "30%" }}
               >
-                Вибраний тур
+                Обраний тур
               </TableCell>
               <TableCell>{children}</TableCell>
             </TableRow>
@@ -150,7 +150,7 @@ export const TourDetails: FC<TourDetailsProps> = ({ tour, children }) => {
                       <Image
                         key={photo.id}
                         src={photo.url}
-                        alt="Tour photo"
+                        alt={photo.description || `Tour photo ${photo.id}`}
                         width={200}
                         height={200}
                         style={{ objectFit: "cover" }}
