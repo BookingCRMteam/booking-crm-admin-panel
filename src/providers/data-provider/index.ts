@@ -80,7 +80,10 @@ export const dataProvider: DataProvider = {
     return { data: record };
   },
   update: async ({ resource, variables }) => {
-    const response = await axiosInstance.patch(`${API_URL}/${resource}`, variables);
+    const response = await axiosInstance.patch(
+      `${API_URL}/${resource}`,
+      variables,
+    );
 
     if (response.status < 200 || response.status > 299) throw response;
     return { data: response.data };

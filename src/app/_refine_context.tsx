@@ -14,6 +14,7 @@ import routerProvider from "@refinedev/nextjs-router";
 
 import { ColorModeContextProvider } from "@contexts/color-mode";
 import { dataProvider } from "@providers/data-provider";
+import { CustomLoading } from "@components/CustomLoading/CustomLoading";
 
 type RefineContextProps = {
   defaultMode?: string;
@@ -37,9 +38,8 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
   const { data, status } = useSession();
   const to = usePathname();
 
-  // TODO: change loading to spinner
   if (status === "loading") {
-    return <span>loading...</span>;
+    return <CustomLoading />;
   }
 
   const authProvider: AuthProvider = {

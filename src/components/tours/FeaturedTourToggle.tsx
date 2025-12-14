@@ -30,7 +30,7 @@ export const FeaturedTourToggle: FC<FeaturedTourToggleProps> = ({
       setIsFeatured(newIsFeatured);
 
       updateFeaturedStatus({
-        resource: `admin/tours/${tourId}/feature`,  
+        resource: `admin/tours/${tourId}/feature`,
         id: tourId,
         values: { isFeatured: newIsFeatured },
         successNotification: {
