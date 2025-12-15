@@ -15,6 +15,7 @@ import routerProvider from "@refinedev/nextjs-router";
 import { ColorModeContextProvider } from "@contexts/color-mode";
 import { dataProvider } from "@providers/data-provider";
 import { CustomLoading } from "@components/CustomLoading/CustomLoading";
+import { CustomLogo } from "@components/CustomLogo/CustomLogo";
 
 type RefineContextProps = {
   defaultMode?: string;
@@ -118,6 +119,7 @@ const App = (props: PropsWithChildren<AppProps>) => {
                 edit: "/operators/edit/:id",
                 meta: {
                   resourceName: "admin/operators",
+                  label: "Оператори",
                 },
               },
               {
@@ -125,11 +127,18 @@ const App = (props: PropsWithChildren<AppProps>) => {
                 list: "/tours",
                 show: "/tours/show/:id",
                 edit: "/tours/edit/:id",
+                meta: {
+                  label: "Тури",
+                },
               },
             ]}
             options={{
               syncWithLocation: true,
               warnWhenUnsavedChanges: true,
+              title: {
+                icon: <CustomLogo />,
+                text: "Booking CRM",
+              },
             }}
           >
             {props.children}
