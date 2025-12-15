@@ -3,7 +3,9 @@ import { JWT } from "next-auth/jwt";
 import { Session, AuthOptions } from "next-auth";
 import axios from "axios";
 
-const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://booking-crm.onrender.com/api/v1';
+const API_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  "https://booking-crm.onrender.com/api/v1";
 
 const ROLE_CHECK_URL = `${API_URL}/auth`;
 const AUTH0_LOGOUT_ROUTE = "/api/auth/logout";
@@ -48,12 +50,12 @@ const authOptions: AuthOptions = {
 
         if (userRole === "admin") {
           console.log(
-            `Користувач ${user.email} успішно автентифікований з роллю: ${userRole}`,
+            `Користувач успішно автентифікований з роллю: ${userRole}`,
           );
           return true;
         } else {
           console.warn(
-            `Користувач ${user.email} має недостатню роль: ${userRole}. Примусовий вихід.`,
+            `Користувач має недостатню роль: ${userRole}. Примусовий вихід.`,
           );
           return AUTH0_LOGOUT_ROUTE;
         }
@@ -83,6 +85,8 @@ const authOptions: AuthOptions = {
       if (Date.now() < (token.accessTokenExpires as number)) {
         return token;
       }
+      // TODO: Implement token refresh logic here, or remove this block if not needed
+      console.warn("Access token has expired");
       return token;
     },
 
