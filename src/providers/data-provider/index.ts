@@ -3,11 +3,8 @@ import axios, { AxiosInstance } from "axios";
 import { DataProvider } from "@refinedev/core";
 import { getSession } from "next-auth/react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://booking-crm.onrender.com/api/v1';
 
-if (!API_URL) {
-  throw new Error("NEXT_PUBLIC_API_BASE_URL is not set");
-}
 const axiosInstance: AxiosInstance = axios.create();
 
 axiosInstance.interceptors.request.use(

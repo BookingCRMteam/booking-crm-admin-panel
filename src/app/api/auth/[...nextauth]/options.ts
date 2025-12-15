@@ -3,11 +3,7 @@ import { JWT } from "next-auth/jwt";
 import { Session, AuthOptions } from "next-auth";
 import axios from "axios";
 
-const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-if (!API_URL) {
-  throw new Error("NEXT_PUBLIC_API_BASE_URL is not set");
-}
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://booking-crm.onrender.com/api/v1';
 
 const ROLE_CHECK_URL = `${API_URL}/auth`;
 const AUTH0_LOGOUT_ROUTE = "/api/auth/logout";
