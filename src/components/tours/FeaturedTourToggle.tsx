@@ -32,9 +32,6 @@ export const FeaturedTourToggle: FC<FeaturedTourToggleProps> = ({
       updateFeaturedStatus({
         resource: `admin/tours/${tourId}/feature`,
         id: tourId,
-        meta: {
-          resourceName: "admin/tours",
-        },
         values: { isFeatured: newIsFeatured },
         successNotification: {
           message: `Статус "Вибраний тур" успішно оновлено на: ${newIsFeatured ? "Так" : "Ні"}`,

@@ -8,20 +8,20 @@ import {
 } from "@refinedev/mui";
 import { SessionProvider, signIn, signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import React from "react";
+import type { PropsWithChildren } from "react";
 
 import routerProvider from "@refinedev/nextjs-router";
 
 import { ColorModeContextProvider } from "@contexts/color-mode";
 import { dataProvider } from "@providers/data-provider";
+import { CustomLoading } from "@components/CustomLoading/CustomLoading";
+import { CustomLogo } from "@components/CustomLogo/CustomLogo";
 
 type RefineContextProps = {
   defaultMode?: string;
 };
 
-export const RefineContext = (
-  props: React.PropsWithChildren<RefineContextProps>,
-) => {
+export const RefineContext = (props: PropsWithChildren<RefineContextProps>) => {
   return (
     <SessionProvider>
       <App {...props} />
@@ -33,13 +33,12 @@ type AppProps = {
   defaultMode?: string;
 };
 
-const App = (props: React.PropsWithChildren<AppProps>) => {
+const App = (props: PropsWithChildren<AppProps>) => {
   const { data, status } = useSession();
   const to = usePathname();
 
-  // TODO: change loading to spinner
   if (status === "loading") {
-    return <span>loading...</span>;
+    return <CustomLoading />;
   }
 
   const authProvider: AuthProvider = {
@@ -104,43 +103,49 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
   const defaultMode = props?.defaultMode;
 
   return (
-    <>
-      <RefineKbarProvider>
-        <ColorModeContextProvider defaultMode={defaultMode}>
-          <RefineSnackbarProvider>
-            <Refine
-              routerProvider={routerProvider}
-              dataProvider={dataProvider}
-              notificationProvider={useNotificationProvider}
-              authProvider={authProvider}
-              resources={[
-                {
-                  name: "operators",
-                  list: "/operators",
-                  show: "/operators/show/:id",
-                  edit: "/operators/edit/:id",
-                  meta: {
-                    resourceName: "admin/operators",
-                  },
+    <RefineKbarProvider>
+      <ColorModeContextProvider defaultMode={defaultMode}>
+        <RefineSnackbarProvider>
+          <Refine
+            routerProvider={routerProvider}
+            dataProvider={dataProvider}
+            notificationProvider={useNotificationProvider}
+            authProvider={authProvider}
+            resources={[
+              {
+                name: "operators",
+                list: "/operators",
+                show: "/operators/show/:id",
+                edit: "/operators/edit/:id",
+                meta: {
+                  resourceName: "admin/operators",
+                  label: "Оператори",
                 },
-                {
-                  name: "tours",
-                  list: "/tours",
-                  show: "/tours/show/:id",
-                  edit: "/tours/edit/:id",
+              },
+              {
+                name: "tours",
+                list: "/tours",
+                show: "/tours/show/:id",
+                edit: "/tours/edit/:id",
+                meta: {
+                  label: "Тури",
                 },
-              ]}
-              options={{
-                syncWithLocation: true,
-                warnWhenUnsavedChanges: true,
-              }}
-            >
-              {props.children}
-              <RefineKbar />
-            </Refine>
-          </RefineSnackbarProvider>
-        </ColorModeContextProvider>
-      </RefineKbarProvider>
-    </>
+              },
+            ]}
+            options={{
+              syncWithLocation: true,
+              warnWhenUnsavedChanges: true,
+              title: {
+                icon: <CustomLogo />,
+                text: "Booking CRM",
+              },
+            }}
+          >
+            {props.children}
+            <RefineKbar />
+          </Refine>
+        </RefineSnackbarProvider>
+      </ColorModeContextProvider>
+    </RefineKbarProvider>
   );
 };

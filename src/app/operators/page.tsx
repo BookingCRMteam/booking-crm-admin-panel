@@ -22,30 +22,31 @@ export default function OperatorsList() {
         flex: 1,
         headerName: "ID",
         minWidth: 50,
+        sortable: false,
       },
       {
         field: "email",
         flex: 1,
         headerName: "Email",
         minWidth: 200,
+        sortable: false,
       },
       {
-        field: "firstName",
+        field: "name",
         flex: 1,
-        headerName: "First Name",
+        headerName: "Full name",
         minWidth: 150,
-      },
-      {
-        field: "lastName",
-        flex: 1,
-        headerName: "Last Name",
-        minWidth: 150,
+        sortable: false,
+        valueGetter: (_, row) => {
+          return `${row.firstName} ${row.lastName}`;
+        },
       },
       {
         field: "status",
         flex: 1,
         headerName: "Status",
         minWidth: 100,
+        sortable: false,
       },
       {
         field: "actions",
@@ -57,8 +58,8 @@ export default function OperatorsList() {
         renderCell: function render({ row }) {
           return (
             <>
-              <ShowButton hideText recordItemId={row.id} />
-              <EditButton hideText recordItemId={row.id} />
+              <ShowButton hideText recordItemId={row.id} title="Show" />
+              <EditButton hideText recordItemId={row.id} title="Edit" />
             </>
           );
         },
