@@ -10,6 +10,37 @@ const API_URL =
 const ROLE_CHECK_URL = `${API_URL}/auth`;
 const AUTH0_LOGOUT_ROUTE = "/api/auth/logout";
 
+/**
+ * Функція для оновлення Access Token через Auth0 API
+ */
+async function refreshAccessToken(token: JWT) {
+  try {
+    const url = `${process.env.AUTH0_DOMAIN}/oauth/token`;
+    const response = await axios.post(url, {
+      client_id: process.env.AUTH0_CLIENT_ID,
+      client_secret: process.env.AUTH0_CLIENT_SECRET,
+      grant_type: "refresh_token",
+      refresh_token: token.refreshToken,
+    });
+
+    const refreshedTokens = response.data;
+
+    return {
+      ...token,
+      accessToken: refreshedTokens.access_token,
+      accessTokenExpires: Date.now() + refreshedTokens.expires_in * 1000,
+      refreshToken: refreshedTokens.refresh_token ?? token.refreshToken,
+    };
+  } catch (error) {
+    console.error("RefreshAccessTokenError", error);
+
+    return {
+      ...token,
+      error: "RefreshAccessTokenError",
+    };
+  }
+}
+
 const authOptions: AuthOptions = {
   providers: [
     Auth0Provider({
@@ -68,10 +99,6 @@ const authOptions: AuthOptions = {
       }
     },
 
-    /**
-     * 2. Callback jwt
-     * Додає токен до JWT. Виконується лише якщо signIn повернув true.
-     */
     async jwt({ token, account }) {
       if (account) {
         return {
@@ -85,17 +112,17 @@ const authOptions: AuthOptions = {
       if (Date.now() < (token.accessTokenExpires as number)) {
         return token;
       }
-      // TODO: Implement token refresh logic here, or remove this block if not needed
-      console.warn("Access token has expired");
-      return token;
+      console.log("Access Token expired, refreshing...");
+      return refreshAccessToken(token);
     },
 
-    /**
-     * 3. Callback session
-     * Додає access_token до об'єкта сесії для використання у dataProvider Refine.
-     */
     async session({ session, token }: { session: Session; token: JWT }) {
       (session as any).accessToken = token.accessToken;
+
+      if ((token as any).error) {
+        (session as any).error = (token as any).error;
+      }
+
       if (token.sub) {
         (session as any).user.id = token.sub;
       }

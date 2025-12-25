@@ -1,7 +1,7 @@
 import dataProviderSimpleRest from "@refinedev/simple-rest";
 import axios, { AxiosInstance } from "axios";
 import { DataProvider } from "@refinedev/core";
-import { getSession } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 
 const API_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ||
@@ -19,6 +19,31 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error),
+);
+
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        const session = await getSession();
+
+        if (session?.accessToken && !(session as any).error) {
+          originalRequest.headers.Authorization = `Bearer ${session.accessToken}`;
+          return axiosInstance(originalRequest);
+        }
+      } catch (refreshError) {
+        console.error("Session refresh failed", refreshError);
+      }
+
+      signIn("auth0");
+    }
+
+    return Promise.reject(error);
+  },
 );
 
 const baseDataProvider = dataProviderSimpleRest(API_URL, axiosInstance);
