@@ -1,4 +1,5 @@
 "use client";
+import { z } from "zod";
 
 import {
   Typography,
@@ -16,6 +17,7 @@ import { Edit } from "@refinedev/mui";
 import { useState, useEffect } from "react";
 import { IOperator } from "@interfaces/operators";
 import { OperatorInfo } from "@components/operators";
+import { rejectionReasonSchema } from "@shared/utils/validation";
 
 export default function OperatorEdit() {
   return (
@@ -63,10 +65,11 @@ function OperatorEditDetails() {
     setError(null);
 
     if (currentStatus === "rejected") {
-      if (!rejectionReason || rejectionReason.length < 50) {
-        setError(
-          "Причина відхилення обов'язкова і має містити мінімум 50 символів.",
-        );
+      const result = rejectionReasonSchema.safeParse(rejectionReason);
+
+      if (!result.success) {
+        const errorMessage = z.prettifyError(result.error);
+        setError(errorMessage);
         return;
       }
     }
@@ -134,22 +137,18 @@ function OperatorEditDetails() {
         </FormControl>
 
         <TextField
-          label="Причина відхилення (мін. 50 символів)"
+          label="Причина відхилення"
           multiline
           rows={4}
           fullWidth
           value={rejectionReason}
-          onChange={(e) => setRejectionReason(e.target.value)}
+          onChange={(e) => {
+            setRejectionReason(e.target.value);
+            setError(null);
+          }}
           disabled={!isRejectionReasonRequired}
           required={isRejectionReasonRequired}
-          error={
-            isRejectionReasonRequired && rejectionReason.trim().length < 50
-          }
-          helperText={
-            isRejectionReasonRequired && rejectionReason.trim().length < 50
-              ? `Залишилось: ${50 - rejectionReason.trim().length} символів`
-              : null
-          }
+          error={!!error}
         />
 
         {error && <Alert severity="error">{error}</Alert>}
