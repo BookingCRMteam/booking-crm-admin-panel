@@ -28,7 +28,7 @@ export const ToursListFilters: FC<ToursListFiltersProps> = ({ setFilters }) => {
     query: { isLoading: operatorsLoading },
   } = useList<IOperator>({
     resource: "operators",
-    pagination: { pageSize: 1000 },
+    pagination: { pageSize: 100 },
   });
 
   const operators = operatorsData.data || [];
